@@ -161,6 +161,35 @@ function tick() {
   requestAnimationFrame(tick);
 }
 
+function getQueryParam(name) {
+  return new URL(window.location.href).searchParams.get(name);
+}
+
+const heroBgMap = {
+  '/computers.html': 'https://source.unsplash.com/collection/190727/1600x1200',
+  '/communications.html': 'https://source.unsplash.com/collection/888146/1600x1200',
+  '/early-electricity.html': 'https://source.unsplash.com/collection/1163637/1600x1200'
+};
+
+function initHeroPage() {
+  const hero = document.querySelector('.hero-page');
+  if (!hero) return;
+  const queryBg = getQueryParam('bg');
+  const baseBg = hero.dataset.bg || heroBgMap[window.location.pathname];
+  const imageUrl = queryBg ? decodeURIComponent(queryBg) : baseBg;
+  if (imageUrl) {
+    hero.style.setProperty('--hero-image', `url('${imageUrl}')`);
+  }
+
+  const updateScrollState = () => {
+    const threshold = window.innerHeight * 0.18;
+    hero.classList.toggle('scrolled', window.scrollY > threshold);
+  };
+
+  updateScrollState();
+  window.addEventListener('scroll', updateScrollState);
+}
+
 if (canvas && gl) {
   initGL();
   window.addEventListener('resize', () => { resize(); initParticles(); });
@@ -168,6 +197,8 @@ if (canvas && gl) {
   initParticles();
   requestAnimationFrame(tick);
 }
+
+initHeroPage();
 
 /* --- Card interactions: hover tilt and expand to fullscreen navigation --- */
 const cards = Array.from(document.querySelectorAll('.card'));
@@ -202,11 +233,14 @@ cards.forEach(card => {
 
   card.addEventListener('click', () => {
     const target = card.getAttribute('data-target') || '#';
-    // expand animation
+    const bg = card.dataset.bg;
+    const destination = new URL(target, window.location.href);
+    if (bg) {
+      destination.searchParams.set('bg', encodeURIComponent(bg));
+    }
     card.classList.add('expand');
-    // after a short delay (allow CSS transition) navigate
     setTimeout(() => {
-      window.location.href = target;
+      window.location.href = destination.href;
     }, 650);
   });
 });
