@@ -12,13 +12,88 @@
   <section class="hero-page" data-bg="https://source.unsplash.com/collection/190727/1600x1200">
     <div class="hero-content">
       <h1>Computers</h1>
-      <p class="hero-subtitle">Placeholder page for Computers. Replace with full content.</p>
+      <p class="hero-subtitle">The evolution from mechanical calculators to modern computing</p>
     </div>
     <span class="scroll-hint" aria-hidden="true"></span>
   </section>
 
+  <!-- TIMELINE COMPONENT: Computer History -->
+  <div class="timeline-container">
+    <!-- Main timeline track with edge points -->
+    <div class="timeline-track">
+      <div class="timeline-edge-point start"></div>
+      
+      <div class="timeline-point" 
+           data-date="1822" 
+           data-title="Babbage's Difference Engine" 
+           data-image="https://upload.wikimedia.org/wikipedia/commons/8/8d/BabbageDifferenceEngine.jpg"
+           data-paragraph="Charles Babbage designed the Difference Engine, a mechanical calculator for computing polynomial functions. Though never fully built during his lifetime, it laid the groundwork for modern computing.">
+      </div>
+
+      <div class="timeline-point" 
+           data-date="1890" 
+           data-title="Hollerith Tabulating Machine" 
+           data-image="https://upload.wikimedia.org/wikipedia/commons/1/19/HollerithTabulator.jpg"
+           data-paragraph="Herman Hollerith's electric tabulating machine used punched cards to process data. It was successfully used for the U.S. Census and marked the beginning of automated data processing.">
+      </div>
+
+      <div class="timeline-point" 
+           data-date="1941" 
+           data-title="Konrad Zuse's Z3" 
+           data-image="https://upload.wikimedia.org/wikipedia/commons/4/4c/Deutsches_Technikmuseum_Berlin_1390-91_IMG_6355-cropped.jpg"
+           data-paragraph="Konrad Zuse completed the Z3, the world's first programmable electromechanical computer. It used binary arithmetic and could be programmed with a punched tape.">
+      </div>
+
+      <div class="timeline-point" 
+           data-date="1946" 
+           data-title="ENIAC" 
+           data-image="https://upload.wikimedia.org/wikipedia/commons/3/3b/BRL61-0977_-_Monk_and_Goldstine_with_ENIAC_-_GPH_cropped.jpg"
+           data-paragraph="ENIAC (Electronic Numerical Integrator and Computer) became the first general-purpose electronic digital computer. Weighing 30 tons and consuming 150 kilowatts, it could perform thousands of calculations per second.">
+      </div>
+
+      <div class="timeline-point" 
+           data-date="1971" 
+           data-title="Intel 4004 Microprocessor" 
+           data-image="https://upload.wikimedia.org/wikipedia/commons/9/9f/KL_Intel_4004.jpg"
+           data-paragraph="Intel released the 4004, the first commercially available microprocessor. This single chip integrated thousands of transistors, making personal computers and modern electronics possible.">
+      </div>
+
+      <div class="timeline-point" 
+           data-date="1985" 
+           data-title="Personal Computers Boom" 
+           data-image="https://upload.wikimedia.org/wikipedia/commons/a/ae/Apple_IIc.jpg"
+           data-paragraph="Personal computers became affordable and accessible to consumers. Machines like the Apple II and IBM PC brought computing power into homes and businesses worldwide.">
+      </div>
+
+      <div class="timeline-point" 
+           data-date="1991" 
+           data-title="World Wide Web" 
+           data-image="https://upload.wikimedia.org/wikipedia/commons/c/c7/WWW_logo.png"
+           data-paragraph="Tim Berners-Lee released the World Wide Web, transforming how people share and access information. The internet revolution accelerated the evolution of computing.">
+      </div>
+
+      <div class="timeline-edge-point end"></div>
+    </div>
+
+    <!-- Information display area (populated based on focused timeline point) -->
+    <div class="timeline-info">
+      <div class="timeline-info-top">
+        <p class="timeline-paragraph"></p>
+        <div class="timeline-info-separator"></div>
+        <div class="timeline-date"></div>
+      </div>
+      <div class="timeline-info-bottom">
+        <h2 class="timeline-title"></h2>
+        <img class="timeline-image" src="" alt="Timeline point image">
+      </div>
+    </div>
+  </div>
+
   <main class="page-content container">
     <p><a href="index.html">← Back</a></p>
   </main>
+
+  <script src="script.js"></script>
+  <script src="timeline.js"></script>
 </body>
 </html>

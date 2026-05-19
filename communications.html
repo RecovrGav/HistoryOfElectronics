@@ -12,13 +12,95 @@
   <section class="hero-page" data-bg="https://source.unsplash.com/collection/888146/1600x1200">
     <div class="hero-content">
       <h1>Communications</h1>
-      <p class="hero-subtitle">Placeholder page for Communications. Replace with full content.</p>
+      <p class="hero-subtitle">From telegraph to wireless: Revolutionary communication technologies</p>
     </div>
     <span class="scroll-hint" aria-hidden="true"></span>
   </section>
 
+  <!-- TIMELINE COMPONENT: Communications History -->
+  <div class="timeline-container">
+    <!-- Main timeline track with edge points -->
+    <div class="timeline-track">
+      <div class="timeline-edge-point start"></div>
+      
+      <div class="timeline-point" 
+           data-date="1844" 
+           data-title="Electric Telegraph" 
+           data-image="https://upload.wikimedia.org/wikipedia/commons/9/92/Morse_code_diagram.png"
+           data-paragraph="Samuel Morse perfected the telegraph, enabling long-distance electrical transmission of messages using Morse code. It was the first practical application of electricity for communication.">
+      </div>
+
+      <div class="timeline-point" 
+           data-date="1876" 
+           data-title="Telephone Invention" 
+           data-image="https://upload.wikimedia.org/wikipedia/commons/1/16/Telephone-Replica.jpg"
+           data-paragraph="Alexander Graham Bell patented the telephone, allowing voice transmission over electrical wires. This revolutionary device replaced the telegraph for most communication needs.">
+      </div>
+
+      <div class="timeline-point" 
+           data-date="1895" 
+           data-title="Wireless Telegraphy" 
+           data-image="https://upload.wikimedia.org/wikipedia/commons/a/a5/Guglielmo_Marconi.jpg"
+           data-paragraph="Guglielmo Marconi successfully demonstrated wireless transmission of electromagnetic signals. His work laid the foundation for radio communication and modern wireless technologies.">
+      </div>
+
+      <div class="timeline-point" 
+           data-date="1920s" 
+           data-title="Radio Broadcasting" 
+           data-image="https://upload.wikimedia.org/wikipedia/commons/5/54/Marconi-Telefunken_1924.jpg"
+           data-paragraph="Commercial radio broadcasting began, enabling one-to-many communication. Radio stations transmitted news, music, and entertainment to millions of households simultaneously.">
+      </div>
+
+      <div class="timeline-point" 
+           data-date="1956" 
+           data-title="Transatlantic Telephone Cable" 
+           data-image="https://upload.wikimedia.org/wikipedia/commons/f/f1/TAT-1_cable_map.png"
+           data-paragraph="The first transatlantic telephone cable TAT-1 connected North America and Europe, enabling intercontinental telephone conversations and marking a major milestone in global communications.">
+      </div>
+
+      <div class="timeline-point" 
+           data-date="1962" 
+           data-title="Satellite Communication" 
+           data-image="https://upload.wikimedia.org/wikipedia/commons/5/5f/Telstar_satellite.jpg"
+           data-paragraph="Telstar became the first active communications satellite, transmitting television signals across the Atlantic Ocean. This opened a new era of satellite-based global communications.">
+      </div>
+
+      <div class="timeline-point" 
+           data-date="1973" 
+           data-title="Mobile Phone Concept" 
+           data-image="https://upload.wikimedia.org/wikipedia/commons/8/86/Motorola_DynaTAC.jpg"
+           data-paragraph="Martin Cooper at Motorola made the first mobile phone call, using a large prototype weighing 2.5 kg. This initiated the transformation of wireless communications into a personal technology.">
+      </div>
+
+      <div class="timeline-point" 
+           data-date="1992" 
+           data-title="Text Messaging Revolution" 
+           data-image="https://upload.wikimedia.org/wikipedia/commons/9/95/Sms_on_mobile.jpg"
+           data-paragraph="SMS (Short Message Service) enabled text communication on mobile phones. Despite being initially underutilized, it became the most widely used communication method of the 2000s.">
+      </div>
+
+      <div class="timeline-edge-point end"></div>
+    </div>
+
+    <!-- Information display area (populated based on focused timeline point) -->
+    <div class="timeline-info">
+      <div class="timeline-info-top">
+        <p class="timeline-paragraph"></p>
+        <div class="timeline-info-separator"></div>
+        <div class="timeline-date"></div>
+      </div>
+      <div class="timeline-info-bottom">
+        <h2 class="timeline-title"></h2>
+        <img class="timeline-image" src="" alt="Timeline point image">
+      </div>
+    </div>
+  </div>
+
   <main class="page-content container">
     <p><a href="index.html">← Back</a></p>
   </main>
+
+  <script src="script.js"></script>
+  <script src="timeline.js"></script>
 </body>
 </html>

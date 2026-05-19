@@ -7,10 +7,184 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <main style="padding:4rem;color:var(--text);">
-    <h1>Full Timeline</h1>
-    <p>Placeholder for the full timeline. Add detailed timeline content here.</p>
+  <canvas id="space"></canvas>
+
+  <section class="hero-page" data-bg="https://source.unsplash.com/collection/190727/1600x1200">
+    <div class="hero-content">
+      <h1>Complete History of Electronics</h1>
+      <p class="hero-subtitle">A comprehensive timeline of major breakthroughs and innovations</p>
+    </div>
+    <span class="scroll-hint" aria-hidden="true"></span>
+  </section>
+
+  <!-- TIMELINE COMPONENT: Complete Electronics History -->
+  <div class="timeline-container">
+    <!-- Main timeline track with edge points -->
+    <div class="timeline-track">
+      <div class="timeline-edge-point start"></div>
+      
+      <div class="timeline-point" 
+           data-date="600 BC" 
+           data-title="Static Electricity Discovery" 
+           data-image="https://upload.wikimedia.org/wikipedia/commons/e/e0/Amber_fossil.jpg"
+           data-paragraph="Ancient Greeks discovered static electricity by rubbing amber. This phenomenon, called 'elektron', laid the foundation for all future electrical discoveries and understanding.">
+      </div>
+
+      <div class="timeline-point" 
+           data-date="1600" 
+           data-title="William Gilbert's Electrostatics" 
+           data-image="https://upload.wikimedia.org/wikipedia/commons/7/7a/William_Gilbert_1544-1603.jpg"
+           data-paragraph="William Gilbert systematically studied electrical phenomena and introduced the term 'electricity'. He distinguished between magnetic and electric forces in his work 'De Magnete'.">
+      </div>
+
+      <div class="timeline-point" 
+           data-date="1752" 
+           data-title="Franklin's Lightning Research" 
+           data-image="https://upload.wikimedia.org/wikipedia/commons/5/51/Benjamin_Franklin_Kite_Experiment.jpg"
+           data-paragraph="Benjamin Franklin proved that lightning was electricity through his famous kite experiment. This led to the invention of the lightning rod and advanced understanding of electrical phenomena.">
+      </div>
+
+      <div class="timeline-point" 
+           data-date="1800" 
+           data-title="Volta's Electrical Battery" 
+           data-image="https://upload.wikimedia.org/wikipedia/commons/3/3a/Volta_batteries.jpg"
+           data-paragraph="Alessandro Volta invented the voltaic pile, the first continuous electrical power source. This breakthrough enabled sustained electrical research and practical electrical applications.">
+      </div>
+
+      <div class="timeline-point" 
+           data-date="1820" 
+           data-title="Electromagnetism Discovered" 
+           data-image="https://upload.wikimedia.org/wikipedia/commons/8/84/Hans_Christian_Oersted.jpg"
+           data-paragraph="Hans Christian Ørsted discovered that electric current produces magnetic fields. This fundamental discovery connected electricity and magnetism, opening new technological possibilities.">
+      </div>
+
+      <div class="timeline-point" 
+           data-date="1831" 
+           data-title="Electromagnetic Induction" 
+           data-image="https://upload.wikimedia.org/wikipedia/commons/5/5a/Michael_Faraday_-_Project_Gutenberg_eText_13103.jpg"
+           data-paragraph="Michael Faraday discovered electromagnetic induction, showing that changing magnetic fields produce electricity. This principle became the basis for generators and electric motors.">
+      </div>
+
+      <div class="timeline-point" 
+           data-date="1844" 
+           data-title="Telegraph Communication" 
+           data-image="https://upload.wikimedia.org/wikipedia/commons/9/92/Morse_code_diagram.png"
+           data-paragraph="Samuel Morse perfected the telegraph, enabling long-distance electrical communication. It was the first practical application of electricity for instant information transfer across distances.">
+      </div>
+
+      <div class="timeline-point" 
+           data-date="1876" 
+           data-title="Telephone Invention" 
+           data-image="https://upload.wikimedia.org/wikipedia/commons/1/16/Telephone-Replica.jpg"
+           data-paragraph="Alexander Graham Bell patented the telephone, revolutionizing voice communication. It became the dominant communication technology and remained so for over a century.">
+      </div>
+
+      <div class="timeline-point" 
+           data-date="1879" 
+           data-title="Incandescent Light Bulb" 
+           data-image="https://upload.wikimedia.org/wikipedia/commons/6/64/GE_25_watt_40_cd_incandescent_A-19_light_bulb.jpg"
+           data-paragraph="Thomas Edison developed a practical incandescent light bulb with a long-lasting filament. This invention transformed society by extending productive hours beyond daylight.">
+      </div>
+
+      <div class="timeline-point" 
+           data-date="1895" 
+           data-title="Wireless Telegraphy" 
+           data-image="https://upload.wikimedia.org/wikipedia/commons/a/a5/Guglielmo_Marconi.jpg"
+           data-paragraph="Guglielmo Marconi successfully demonstrated wireless signal transmission. His work laid the foundation for radio communication and all modern wireless technologies.">
+      </div>
+
+      <div class="timeline-point" 
+           data-date="1906" 
+           data-title="First Radio Transmission" 
+           data-image="https://upload.wikimedia.org/wikipedia/commons/thumb/5/54/Marconi-Telefunken_1924.jpg/440px-Marconi-Telefunken_1924.jpg"
+           data-paragraph="Reginald Fessenden transmitted the first audio broadcast using radio waves. This milestone proved that voice could be transmitted wirelessly over long distances.">
+      </div>
+
+      <div class="timeline-point" 
+           data-date="1920" 
+           data-title="Commercial Radio Broadcasting" 
+           data-image="https://upload.wikimedia.org/wikipedia/commons/1/1a/KDKA_first_radio_station_in_america.jpg"
+           data-paragraph="KDKA in Pittsburgh began commercial radio broadcasting. This sparked the radio revolution, bringing entertainment and news into millions of homes worldwide.">
+      </div>
+
+      <div class="timeline-point" 
+           data-date="1947" 
+           data-title="Transistor Invention" 
+           data-image="https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Replica_of_first_transistor.jpg/280px-Replica_of_first_transistor.jpg"
+           data-paragraph="Bell Labs scientists invented the transistor, replacing bulky vacuum tubes. This breakthrough miniaturized electronics and enabled modern computing and consumer electronics.">
+      </div>
+
+      <div class="timeline-point" 
+           data-date="1958" 
+           data-title="Integrated Circuit" 
+           data-image="https://upload.wikimedia.org/wikipedia/commons/a/a4/Intel_4004_left_and_right_sides.jpg"
+           data-paragraph="Jack Kilby and Robert Noyce invented the integrated circuit. Multiple transistors on a single chip exponentially increased computing power while reducing size and cost.">
+      </div>
+
+      <div class="timeline-point" 
+           data-date="1971" 
+           data-title="Microprocessor Revolution" 
+           data-image="https://upload.wikimedia.org/wikipedia/commons/9/9f/KL_Intel_4004.jpg"
+           data-paragraph="Intel released the 4004 microprocessor, the first single-chip CPU. This enabled personal computers and launched the digital age that defines modern electronics.">
+      </div>
+
+      <div class="timeline-point" 
+           data-date="1981" 
+           data-title="Personal Computers" 
+           data-image="https://upload.wikimedia.org/wikipedia/commons/5/53/IBM_PC_5150.jpg"
+           data-paragraph="IBM released the IBM PC, launching the personal computer era. Affordable computing power became accessible to businesses and consumers, transforming society and work.">
+      </div>
+
+      <div class="timeline-point" 
+           data-date="1989" 
+           data-title="World Wide Web" 
+           data-image="https://upload.wikimedia.org/wikipedia/commons/c/c7/WWW_logo.png"
+           data-paragraph="Tim Berners-Lee invented the World Wide Web, revolutionizing information sharing. The internet transformed electronics from isolated devices into interconnected global networks.">
+      </div>
+
+      <div class="timeline-point" 
+           data-date="1992" 
+           data-title="Mobile Communication" 
+           data-image="https://upload.wikimedia.org/wikipedia/commons/8/86/Motorola_DynaTAC.jpg"
+           data-paragraph="Mobile phones became commercially available, starting the wireless revolution. Communication became portable and ubiquitous, changing how people connect worldwide.">
+      </div>
+
+      <div class="timeline-point" 
+           data-date="2007" 
+           data-title="Smartphone Era" 
+           data-image="https://upload.wikimedia.org/wikipedia/commons/6/6e/iPhone_Introduction_Keynote%2C_Cupertino%2C_CA.jpg"
+           data-paragraph="Apple released the iPhone, revolutionizing mobile electronics with touchscreen interfaces. Smartphones integrated computing, communication, and entertainment into portable devices.">
+      </div>
+
+      <div class="timeline-point" 
+           data-date="2020" 
+           data-title="5G Wireless Networks" 
+           data-image="https://upload.wikimedia.org/wikipedia/commons/5/50/Mobile_tower_5G.jpg"
+           data-paragraph="5G networks began deployment worldwide, offering unprecedented wireless speeds. Ultra-fast connectivity enabled IoT, remote work, and new applications for electronics and computing.">
+      </div>
+
+      <div class="timeline-edge-point end"></div>
+    </div>
+
+    <!-- Information display area (populated based on focused timeline point) -->
+    <div class="timeline-info">
+      <div class="timeline-info-top">
+        <p class="timeline-paragraph"></p>
+        <div class="timeline-info-separator"></div>
+        <div class="timeline-date"></div>
+      </div>
+      <div class="timeline-info-bottom">
+        <h2 class="timeline-title"></h2>
+        <img class="timeline-image" src="" alt="Timeline point image">
+      </div>
+    </div>
+  </div>
+
+  <main class="page-content container">
     <p><a href="index.html">← Back</a></p>
   </main>
+
+  <script src="script.js"></script>
+  <script src="timeline.js"></script>
 </body>
 </html>
