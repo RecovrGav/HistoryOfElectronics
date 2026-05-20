@@ -10,35 +10,45 @@ class TimelineComponent {
     
     this.track = this.container.querySelector('.timeline-track');
     this.points = Array.from(this.container.querySelectorAll('.timeline-point'));
+    this.edgePoints = Array.from(this.container.querySelectorAll('.timeline-edge-point'));
+    this.focusTargets = Array.from(this.container.querySelectorAll('.timeline-edge-point, .timeline-point'));
     this.infoSection = this.container.querySelector('.timeline-info');
     this.isPC = window.innerWidth >= 768;
     
-    this.currentFocusIndex = Math.max(0, Math.floor(this.points.length / 2) - 1);
+    this.currentFocusIndex = 0;
     this.pointSpacing = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--timeline-point-spacing'));
     this.transitionDuration = parseFloat(
       getComputedStyle(document.documentElement)
         .getPropertyValue('--timeline-transition-duration')
         .replace('ms', '')
     );
+    this.edgeDotSize = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--timeline-edge-dot-size'));
+    this.timelineDelay = 120;
     
     this.init();
   }
 
   init() {
-    if (!this.track || this.points.length === 0) return;
+    if (!this.track || this.focusTargets.length === 0) return;
 
-    // Position points based on their order
-    this.points.forEach((point, index) => {
+    // Position points and edge points based on their order
+    this.focusTargets.forEach((point, index) => {
       point.dataset.index = index;
       this.isPC ? this.positionPointPC(point, index) : this.positionPointMobile(point, index);
     });
 
-    // Initialize event listeners
+    this.calculateTrackLayout();
+
+    if (this.isPC && window.gsap && window.ScrollTrigger) {
+      this.initGSAP();
+    }
+
     this.setupEventListeners();
     
     // Initial state
     this.updateFocusedPoint();
     this.updateInfo();
+    this.updateTrackTransform(0);
     
     // Set initial background on mobile
     if (!this.isPC) {
@@ -60,25 +70,73 @@ class TimelineComponent {
   positionPointMobile(point, index) {
     // Calculate vertical position based on viewport height
     const containerHeight = this.container.offsetHeight;
-    const totalPoints = this.points.length;
+    const totalPoints = this.focusTargets.length;
     const spacing = containerHeight / (totalPoints + 1);
     const yPosition = (index + 1) * spacing;
     point.style.top = yPosition + 'px';
+    point.style.left = '50%';
+    point.style.transform = 'translate(-50%, -50%)';
+  }
+
+  calculateTrackLayout() {
+    if (!this.track) return;
+
+    if (!this.isPC) {
+      this.track.style.width = 'auto';
+      this.container.style.minHeight = 'auto';
+      return;
+    }
+
+    const pointsCount = this.focusTargets.length;
+    this.trackWidth = Math.max(
+      (pointsCount - 1) * this.pointSpacing + this.edgeDotSize,
+      window.innerWidth
+    );
+
+    this.track.style.width = this.trackWidth + 'px';
+    this.startTranslation = window.innerWidth / 2;
+    this.endTranslation = window.innerWidth / 2 - this.trackWidth;
+    this.trackShiftRange = this.endTranslation - this.startTranslation;
+
+    const baseScrollRange = Math.max(1, this.container.offsetHeight - window.innerHeight);
+    this.startScroll = this.container.offsetTop + this.timelineDelay;
+    this.endScroll = this.startScroll + baseScrollRange;
+    this.container.style.minHeight = 'auto';
+  }
+
+  updateTrackTransform(progress) {
+    if (!this.track || !this.isPC) return;
+
+    const translation = this.startTranslation + this.trackShiftRange * progress;
+    this.track.style.transform = `translateX(${translation}px)`;
+    this.updateTimelineEdgeFade();
+  }
+
+  getScrollProgress() {
+    if (!this.isPC) return 0;
+    if (typeof this.startScroll !== 'number' || typeof this.endScroll !== 'number') return 0;
+
+    const scrollTop = window.scrollY;
+    if (scrollTop <= this.startScroll) return 0;
+    if (scrollTop >= this.endScroll) return 1;
+
+    const progress = (scrollTop - this.startScroll) / Math.max(1, this.endScroll - this.startScroll);
+    return Math.min(1, Math.max(0, progress));
   }
 
   setupEventListeners() {
-    if (this.isPC) {
-      // PC: handle scroll and horizontal timeline scrolling
+    if (this.isPC && !this.timelineAnimation) {
+      // PC fallback: handle horizontal timeline without GSAP
       window.addEventListener('scroll', () => this.handlePCScroll());
-      window.addEventListener('resize', () => this.handleResize());
-    } else {
+    } else if (!this.isPC) {
       // Mobile: handle vertical scroll through points
       window.addEventListener('scroll', () => this.handleMobileScroll());
-      window.addEventListener('resize', () => this.handleResize());
     }
 
+    window.addEventListener('resize', () => this.handleResize());
+
     // Point click handlers
-    this.points.forEach(point => {
+    this.focusTargets.forEach(point => {
       point.addEventListener('click', (e) => this.handlePointClick(e));
     });
   }
@@ -87,53 +145,52 @@ class TimelineComponent {
     const wasPC = this.isPC;
     this.isPC = window.innerWidth >= 768;
     
-    // If viewport changed from PC to mobile or vice versa, reinitialize
-    if (wasPC !== this.isPC) {
-      this.points.forEach((point, index) => {
-        this.isPC ? this.positionPointPC(point, index) : this.positionPointMobile(point, index);
-      });
-      this.updateFocusedPoint();
-      this.updateInfo();
+    this.focusTargets.forEach((point, index) => {
+      this.isPC ? this.positionPointPC(point, index) : this.positionPointMobile(point, index);
+    });
+    this.calculateTrackLayout();
+
+    if (this.timelineAnimation) {
+      this.timelineAnimation.kill();
+      this.initGSAP();
+    } else {
+      this.updateTrackTransform(this.getScrollProgress());
     }
+
+    this.updateFocusedPoint();
+    this.updateInfo();
   }
 
   handlePCScroll() {
-    const hero = document.querySelector('.hero-page');
-    if (!hero) return;
-
-    const heroRect = hero.getBoundingClientRect();
-    const heroBottom = heroRect.bottom;
-    const windowHeight = window.innerHeight;
-
-    // Phase 1: Background image fades as you scroll past hero
-    if (heroBottom > 0) {
-      const heroSection = document.querySelector('.hero-page');
-      if (heroSection) {
-        const scrollProgress = Math.max(0, 1 - (heroBottom / windowHeight));
-        heroSection.classList.toggle('scrolled', scrollProgress > 0.3);
-      }
-    }
-
-    // Phase 2: Once hero is off screen, start horizontal timeline scrolling
-    if (heroBottom <= 0) {
-      const containerRect = this.container.getBoundingClientRect();
-      const centerY = windowHeight / 2;
-      
-      // Calculate how far past the timeline top we are
-      const distanceBelowCenter = containerRect.top - centerY;
-      
-      // Only scroll horizontally if timeline is roughly centered
-      if (Math.abs(distanceBelowCenter) < windowHeight * 0.3) {
-        // Scroll amount increases as distance from center increases
-        const scrollAmount = Math.max(0, Math.abs(distanceBelowCenter) * 1.5);
-        
-        this.track.style.transform = `translateX(-${scrollAmount}px)`;
-        this.updateTimelineEdgeFade();
-      }
-    }
-
-    // Update focused point based on which point is in the center
+    const progress = this.getScrollProgress();
+    this.updateTrackTransform(progress);
     this.updateFocusedPointPC();
+  }
+
+  initGSAP() {
+    gsap.registerPlugin(ScrollTrigger);
+    const pinTarget = this.container.querySelector('.timeline-stage') || this.container;
+    this.track.style.transform = `translateX(${this.startTranslation}px)`;
+    this.track.style.willChange = 'transform';
+
+    const extraScroll = this.timelineDelay;
+    this.timelineAnimation = gsap.timeline({
+      scrollTrigger: {
+        trigger: this.container,
+        start: 'top 120px',
+        end: `+=${this.trackWidth + extraScroll}`,
+        scrub: true,
+        pin: pinTarget,
+        pinSpacing: true,
+        anticipatePin: 1,
+        invalidateOnRefresh: true,
+        onUpdate: () => this.updateFocusedPointPC()
+      }
+    });
+
+    this.timelineAnimation
+      .to(this.track, { x: this.startTranslation, duration: extraScroll })
+      .to(this.track, { x: this.endTranslation, duration: this.trackWidth });
   }
 
   handleMobileScroll() {
@@ -144,13 +201,12 @@ class TimelineComponent {
   updateFocusedPointPC() {
     if (!this.track) return;
 
-    const trackRect = this.track.getBoundingClientRect();
     const centerX = window.innerWidth / 2;
     
     let closest = 0;
     let closestDistance = Infinity;
 
-    this.points.forEach((point, index) => {
+    this.focusTargets.forEach((point, index) => {
       const pointRect = point.getBoundingClientRect();
       const pointCenterX = pointRect.left + pointRect.width / 2;
       const distance = Math.abs(pointCenterX - centerX);
@@ -169,7 +225,7 @@ class TimelineComponent {
     let closest = 0;
     let closestDistance = Infinity;
 
-    this.points.forEach((point, index) => {
+    this.focusTargets.forEach((point, index) => {
       const pointRect = point.getBoundingClientRect();
       const pointCenterY = pointRect.top + pointRect.height / 2;
       const distance = Math.abs(pointCenterY - centerY);
@@ -193,13 +249,10 @@ class TimelineComponent {
   }
 
   updateFocusedPoint() {
-    this.points.forEach((point, index) => {
+    this.focusTargets.forEach((point, index) => {
       point.classList.remove('focused', 'minimized');
       
-      // Edge points (first and last) should not expand
-      const isEdgePoint = index === 0 || index === this.points.length - 1;
-      
-      if (index === this.currentFocusIndex && !isEdgePoint) {
+      if (index === this.currentFocusIndex) {
         point.classList.add('focused');
       } else {
         point.classList.add('minimized');
@@ -208,12 +261,9 @@ class TimelineComponent {
   }
 
   updateInfo() {
-    const focusedPoint = this.points[this.currentFocusIndex];
-    const isEdgePoint = 
-      this.currentFocusIndex === 0 || 
-      this.currentFocusIndex === this.points.length - 1;
+    const focusedPoint = this.focusTargets[this.currentFocusIndex];
 
-    if (!focusedPoint || isEdgePoint) {
+    if (!focusedPoint || focusedPoint.classList.contains('timeline-edge-point')) {
       this.hideInfo();
       return;
     }
@@ -286,10 +336,7 @@ class TimelineComponent {
   updateMobileBackground() {
     if (this.isPC) return;
 
-    const focusedPoint = this.points[this.currentFocusIndex];
-    const isEdgePoint = 
-      this.currentFocusIndex === 0 || 
-      this.currentFocusIndex === this.points.length - 1;
+    const focusedPoint = this.focusTargets[this.currentFocusIndex];
 
     let bgElement = document.querySelector('.timeline-mobile-bg');
     
@@ -299,7 +346,7 @@ class TimelineComponent {
       document.body.appendChild(bgElement);
     }
 
-    if (focusedPoint && !isEdgePoint && focusedPoint.dataset.image) {
+    if (focusedPoint && focusedPoint.dataset.image) {
       bgElement.style.backgroundImage = `url('${focusedPoint.dataset.image}')`;
       bgElement.classList.add('visible');
     } else {
@@ -319,17 +366,17 @@ class TimelineComponent {
   }
 
   handlePointClick(event) {
-    const point = event.target.closest('.timeline-point');
+    const point = event.target.closest('.timeline-edge-point, .timeline-point');
     if (!point) return;
 
-    const index = Array.from(this.points).indexOf(point);
+    const index = Array.from(this.focusTargets).indexOf(point);
+    if (index === -1) return;
+
     this.setFocusedPoint(index);
 
-    // On PC, scroll to make the point more centered
     if (this.isPC) {
-      const targetX = index * this.pointSpacing - window.innerWidth / 2;
-      this.track.style.transform = `translateX(-${targetX}px)`;
-      this.updateTimelineEdgeFade();
+      const pointProgress = index / Math.max(1, this.focusTargets.length - 1);
+      this.updateTrackTransform(pointProgress);
     }
   }
 }

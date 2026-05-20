@@ -19,69 +19,69 @@
 
   <!-- TIMELINE COMPONENT: Early Electricity History -->
   <div class="timeline-container">
-    <!-- Main timeline track with edge points -->
-    <div class="timeline-track">
-      <div class="timeline-edge-point start"></div>
-      
-      <!-- Timeline Points: Add points by adding elements with data attributes -->
-      <!-- Each point needs: data-date, data-title, data-image, data-paragraph -->
-      <!-- Points are positioned left-to-right (PC) or top-to-bottom (mobile) based on order -->
-      
-      <div class="timeline-point" 
-           data-date="600 BC" 
-           data-title="Static Electricity" 
-           data-image="https://upload.wikimedia.org/wikipedia/commons/e/e0/Amber_fossil.jpg"
-           data-paragraph="Ancient Greeks discovered that rubbing amber with fur produced static electricity. This phenomenon, called 'elektron' in Greek, laid the foundation for understanding electrical forces.">
-      </div>
+    <div class="timeline-stage">
+      <div class="timeline-info">
+        <!-- Information display: time + paragraph above timeline -->
+        <div class="timeline-info-top">
+          <div class="timeline-date"></div>
+          <div class="timeline-info-separator"></div>
+          <p class="timeline-paragraph"></p>
+        </div>
 
-      <div class="timeline-point" 
-           data-date="1600s" 
-           data-title="William Gilbert's Experiments" 
-           data-image="https://upload.wikimedia.org/wikipedia/commons/7/7a/William_Gilbert_1544-1603.jpg"
-           data-paragraph="William Gilbert systematically studied magnetism and electricity, introducing the term 'electricity' from the Greek word for amber. He distinguished between magnetic and electric forces.">
-      </div>
+        <!-- Main timeline track with edge points and data points -->
+        <div class="timeline-track">
+          <div class="timeline-edge-point start"></div>
+          
+          <div class="timeline-point" 
+               data-date="600 BC" 
+               data-title="Static Electricity" 
+               data-image="https://upload.wikimedia.org/wikipedia/commons/e/e0/Amber_fossil.jpg"
+               data-paragraph="Ancient Greeks discovered that rubbing amber with fur produced static electricity. This phenomenon, called 'elektron' in Greek, laid the foundation for understanding electrical forces.">
+          </div>
 
-      <div class="timeline-point" 
-           data-date="1752" 
-           data-title="Franklin's Kite Experiment" 
-           data-image="https://upload.wikimedia.org/wikipedia/commons/5/51/Benjamin_Franklin_Kite_Experiment.jpg"
-           data-paragraph="Benjamin Franklin proved that lightning was a form of electricity by flying a kite in a thunderstorm. This groundbreaking experiment demonstrated that electricity existed in nature as a powerful force.">
-      </div>
+          <div class="timeline-point" 
+               data-date="1600s" 
+               data-title="William Gilbert's Experiments" 
+               data-image="https://upload.wikimedia.org/wikipedia/commons/7/7a/William_Gilbert_1544-1603.jpg"
+               data-paragraph="William Gilbert systematically studied magnetism and electricity, introducing the term 'electricity' from the Greek word for amber. He distinguished between magnetic and electric forces.">
+          </div>
 
-      <div class="timeline-point" 
-           data-date="1800" 
-           data-title="Volta's Electrical Battery" 
-           data-image="https://upload.wikimedia.org/wikipedia/commons/3/3a/Volta_batteries.jpg"
-           data-paragraph="Alessandro Volta invented the first electrical battery, consisting of alternating zinc and copper discs separated by salt water. This provided the first continuous source of electrical current.">
-      </div>
+          <div class="timeline-point" 
+               data-date="1752" 
+               data-title="Franklin's Kite Experiment" 
+               data-image="https://upload.wikimedia.org/wikipedia/commons/5/51/Benjamin_Franklin_Kite_Experiment.jpg"
+               data-paragraph="Benjamin Franklin proved that lightning was a form of electricity by flying a kite in a thunderstorm. This groundbreaking experiment demonstrated that electricity existed in nature as a powerful force.">
+          </div>
 
-      <div class="timeline-point" 
-           data-date="1820" 
-           data-title="Electromagnetism Discovery" 
-           data-image="https://upload.wikimedia.org/wikipedia/commons/8/84/Hans_Christian_Oersted.jpg"
-           data-paragraph="Hans Christian Ørsted discovered that electric current produces a magnetic field, establishing the connection between electricity and magnetism. This breakthrough led to the development of electromagnets.">
-      </div>
+          <div class="timeline-point" 
+               data-date="1800" 
+               data-title="Volta's Electrical Battery" 
+               data-image="https://upload.wikimedia.org/wikipedia/commons/3/3a/Volta_batteries.jpg"
+               data-paragraph="Alessandro Volta invented the first electrical battery, consisting of alternating zinc and copper discs separated by salt water. This provided the first continuous source of electrical current.">
+          </div>
 
-      <div class="timeline-point" 
-           data-date="1831" 
-           data-title="Faraday's Electromagnetic Induction" 
-           data-image="https://upload.wikimedia.org/wikipedia/commons/5/5a/Michael_Faraday_-_Project_Gutenberg_eText_13103.jpg"
-           data-paragraph="Michael Faraday discovered electromagnetic induction, showing that changing magnetic fields could produce electricity. This principle became the basis for generators and transformers.">
-      </div>
+          <div class="timeline-point" 
+               data-date="1820" 
+               data-title="Electromagnetism Discovery" 
+               data-image="https://upload.wikimedia.org/wikipedia/commons/8/84/Hans_Christian_Oersted.jpg"
+               data-paragraph="Hans Christian Ørsted discovered that electric current produces a magnetic field, establishing the connection between electricity and magnetism. This breakthrough led to the development of electromagnets.">
+          </div>
 
-      <div class="timeline-edge-point end"></div>
-    </div>
+          <div class="timeline-point" 
+               data-date="1831" 
+               data-title="Faraday's Electromagnetic Induction" 
+               data-image="https://upload.wikimedia.org/wikipedia/commons/5/5a/Michael_Faraday_-_Project_Gutenberg_eText_13103.jpg"
+               data-paragraph="Michael Faraday discovered electromagnetic induction, showing that changing magnetic fields could produce electricity. This principle became the basis for generators and transformers.">
+          </div>
 
-    <!-- Information display area (populated based on focused timeline point) -->
-    <div class="timeline-info">
-      <div class="timeline-info-top">
-        <p class="timeline-paragraph"></p>
-        <div class="timeline-info-separator"></div>
-        <div class="timeline-date"></div>
-      </div>
-      <div class="timeline-info-bottom">
-        <h2 class="timeline-title"></h2>
-        <img class="timeline-image" src="" alt="Timeline point image">
+          <div class="timeline-edge-point end"></div>
+        </div>
+
+        <!-- Information display: image + title below timeline -->
+        <div class="timeline-info-bottom">
+          <h2 class="timeline-title"></h2>
+          <img class="timeline-image" src="" alt="Timeline point image">
+        </div>
       </div>
     </div>
   </div>
@@ -91,6 +91,8 @@
   </main>
 
   <script src="script.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
   <script src="timeline.js"></script>
 </body>
 </html>
